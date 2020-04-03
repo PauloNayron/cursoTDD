@@ -41,7 +41,7 @@ public class BookControllerTest {
     @DisplayName("Deve criar um livro com sucesso.")
     public void createBookTest() throws Exception {
         BookDTO dto = BookDTO.builder().author("Artur").title("As aventuras").isbn("001").build();
-        Book savedBook = Book.builder().id(10L).author("Artur").title("As aventuras").isbn("001").build();
+        Book savedBook = Book.builder().id(10).author("Artur").title("As aventuras").isbn("001").build();
 
         BDDMockito.given(service.save(Mockito.any(Book.class))).willReturn(savedBook);
 
