@@ -1,6 +1,7 @@
 package com.cursotdd.libraryapi.api.service.impl;
 
 import com.cursotdd.libraryapi.api.model.entity.Book;
+import com.cursotdd.libraryapi.exception.BusinessException;
 import com.cursotdd.libraryapi.model.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class BookServiceImpl implements com.cursotdd.libraryapi.api.service.Book
 
     @Override
     public Book save(Book book) {
+        if (repository.existsByIsbn(book.getIsbn())) {
+            throw new BusinessException("Isbn já cadastrado.");
+        }
         return repository.save(book);
     }
 }
