@@ -35,7 +35,7 @@ class BookServiceTest {
         // cenário
         Book book = createValidBook();
         Mockito.when(repository.save(book)).thenReturn(
-                Book.builder().id(11)
+                Book.builder().id(11L)
                         .isbn("123")
                         .title("As aventuras")
                         .author("Fulano")
