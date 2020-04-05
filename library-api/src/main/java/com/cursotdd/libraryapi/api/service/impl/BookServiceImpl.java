@@ -28,4 +28,9 @@ public class BookServiceImpl implements com.cursotdd.libraryapi.api.service.Book
     public Optional<Book> getById(Long id) {
         return Optional.empty();
     }
+
+    @Override
+    public void delete(Book book) {
+        
+    }
 }

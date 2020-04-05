@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -134,7 +135,7 @@ public class BookControllerTest {
     @DisplayName("Deve retornar resource not found quando o livro procurado não existir.")
     public void bookNotFountTest () throws Exception {
         // cenario
-        BDDMockito.given(service.getById(Mockito.anyLong())).willReturn(Optional.empty());
+        BDDMockito.given(service.getById(anyLong())).willReturn(Optional.empty());
         // execucao
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(BOOK_API.concat("/" + 1))
@@ -142,6 +143,32 @@ public class BookControllerTest {
         // verificacao
         mvc
                 .perform(request)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Deve deletar um livro.")
+    public void deleteBookTest () throws Exception {
+        // cenario
+        BDDMockito.given(service.getById(anyLong())).willReturn(Optional.of(Book.builder().id(1L).build()));
+        // execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(BOOK_API.concat("/" + 1));
+        // verificacao
+        mvc.perform(request)
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve retornar resource not found quando não encontrar o livro para deletar.")
+    public void deleteInexistentBookTest () throws Exception {
+        // cenario
+        BDDMockito.given(service.getById(anyLong())).willReturn(Optional.empty());
+        // execucao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(BOOK_API.concat("/" + 1));
+        // verificacao
+        mvc.perform(request)
                 .andExpect(status().isNotFound());
     }
 
