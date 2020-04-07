@@ -31,11 +31,17 @@ public class BookServiceImpl implements com.cursotdd.libraryapi.api.service.Book
 
     @Override
     public void delete(Book book) {
-        
+        if (book == null || book.getId() == null) {
+            throw new IllegalArgumentException("Book não pode ter id null.");
+        }
+        this.repository.delete(book);
     }
 
     @Override
     public Book update(Book book) {
-        return null;
+        if (book == null || book.getId() == null) {
+            throw new IllegalArgumentException("Book não pode ter id null.");
+        }
+        return this.repository.save(book);
     }
 }
