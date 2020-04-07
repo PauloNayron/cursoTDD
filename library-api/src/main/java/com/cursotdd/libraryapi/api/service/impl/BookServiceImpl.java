@@ -3,6 +3,8 @@ package com.cursotdd.libraryapi.api.service.impl;
 import com.cursotdd.libraryapi.api.model.entity.Book;
 import com.cursotdd.libraryapi.exception.BusinessException;
 import com.cursotdd.libraryapi.model.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,5 +45,10 @@ public class BookServiceImpl implements com.cursotdd.libraryapi.api.service.Book
             throw new IllegalArgumentException("Book não pode ter id null.");
         }
         return this.repository.save(book);
+    }
+
+    @Override
+    public Page<Book> find(Book filter, Pageable pageRequest) {
+        return null;
     }
 }
